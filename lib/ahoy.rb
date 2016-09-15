@@ -92,6 +92,9 @@ module Ahoy
   mattr_accessor :protect_from_forgery
   self.protect_from_forgery = false
 
+  mattr_accessor :secure_cookie
+  self.secure_cookie = false
+
   def self.ensure_uuid(id)
     valid = UUIDTools::UUID.parse(id) rescue nil
     if valid

@@ -8,6 +8,7 @@ require "safely/core"
 
 require "ahoy/base_store"
 require "ahoy/controller"
+require "ahoy/cookie_jar"
 require "ahoy/database_store"
 require "ahoy/helper"
 require "ahoy/model"

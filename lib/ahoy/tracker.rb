@@ -1,7 +1,10 @@
+require 'forwardable'
 require "active_support/core_ext/digest/uuid"
 
 module Ahoy
   class Tracker
+    extend Forwardable
+
     UUID_NAMESPACE = "a82ae811-5011-45ab-a728-569df7499c5f"
 
     attr_reader :request, :controller
@@ -11,6 +14,7 @@ module Ahoy
       @controller = options[:controller]
       @request = options[:request] || @controller.try(:request)
       @visit_token = options[:visit_token]
+      @cookie_jar = Ahoy::CookieJar.new(@request.cookie_jar)
       @options = options
     end
 
@@ -167,18 +171,7 @@ module Ahoy
       end
     end
 
-    def set_cookie(name, value, duration = nil, use_domain = true)
-      # safety net
-      return unless Ahoy.cookies
-
-      cookie = {
-        value: value
-      }
-      cookie[:expires] = duration.from_now if duration
-      domain = Ahoy.cookie_domain
-      cookie[:domain] = domain if domain && use_domain
-      request.cookie_jar[name] = cookie
-    end
+    def_delegator :@cookie_jar, :set_cookie
 
     def delete_cookie(name)
       request.cookie_jar.delete(name) if request.cookie_jar[name]

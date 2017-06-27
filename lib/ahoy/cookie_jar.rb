@@ -12,6 +12,7 @@ module Ahoy
         value: value
       }
       cookie[:expires] = duration.from_now if duration
+      cookie[:secure] = true if Ahoy.secure_cookies
       domain = Ahoy.cookie_domain
       cookie[:domain] = domain if domain && use_domain
       cookies[name] = cookie

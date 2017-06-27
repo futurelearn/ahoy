@@ -268,6 +268,16 @@ To track visits across multiple subdomains, use:
 Ahoy.cookie_domain = :all
 ```
 
+### Secure cookies
+
+To ensure that cookies set by Ahoy are set only on secure requests, use:
+
+```ruby
+Ahoy.secure_cookies = true
+```
+
+This setting is disabled by default.
+
 ### Geocoding
 
 Disable geocoding with:

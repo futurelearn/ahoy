@@ -29,6 +29,9 @@ module Ahoy
   mattr_accessor :cookies
   self.cookies = true
 
+  mattr_accessor :secure_cookies
+  self.secure_cookies = false
+
   mattr_accessor :cookie_domain
 
   mattr_accessor :server_side_visits

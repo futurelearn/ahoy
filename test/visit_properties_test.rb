@@ -41,7 +41,18 @@ class TestVisitProperties < Minitest::Test
 
   def test_nil_user_agent
     @request.expect(:user_agent, nil)
-    assert_equal @visit_properties.user_agent, nil
+    assert_nil @visit_properties.user_agent
+  end
+
+  def test_encoding_of_search_keyword
+    # request with invalid string in referrer
+    # assert that the invalid string was replaced with `?`
+
+    referrer = "https://search.naver.com/search.naver?where=nexearch&sm=tol_hty&query=%C7%BB%C3%B3%B7%B1"
+    # action
+    @request.expect(:referer, referrer)
+    # assertion
+    assert_nil @visit_properties.search_keyword
   end
 
   private

@@ -44,6 +44,13 @@ class TestVisitProperties < Minitest::Test
     assert_nil @visit_properties.user_agent
   end
 
+  def test_encoding_of_search_keyword
+    invalid_byte_sequence = "%C7%BB%C3%B3%B7%B1"
+    referrer = "https://search.naver.com/search.naver?where=nexearch&sm=tol_hty&query=#{invalid_byte_sequence}"
+    @request.expect(:referer, referrer)
+    assert_nil @visit_properties.search_keyword
+  end
+
   private
 
   def with_geocode(enabled)

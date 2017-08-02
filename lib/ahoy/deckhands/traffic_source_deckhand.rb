@@ -10,7 +10,9 @@ module Ahoy
       end
 
       def search_keyword
-        @search_keyword ||= (self.class.referrer_parser.parse(@referrer)[:term][0..255] rescue nil).presence
+        @search_keyword ||= (self.class.referrer_parser.parse(@referrer)[:term][0..255]).presence
+      rescue
+        nil
       end
 
       # performance hack for referer-parser

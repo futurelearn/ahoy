@@ -41,7 +41,7 @@ class TestVisitProperties < Minitest::Test
 
   def test_nil_user_agent
     @request.expect(:user_agent, nil)
-    assert_equal @visit_properties.user_agent, nil
+    assert_nil @visit_properties.user_agent
   end
 
   private

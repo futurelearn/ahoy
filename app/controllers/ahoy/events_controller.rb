@@ -19,14 +19,20 @@ module Ahoy
     private
 
     def events
-      if params[:name]
-        # legacy API
-        [request.params]
-      elsif params[:events]
-        request.params[:events]
+      if params[:name] # single event
+        [params]
+      elsif params[:events] # multiple events
+        params[:events]
       else
         begin
-          ActiveSupport::JSON.decode(request.body.read)
+          parsed_body = ActiveSupport::JSON.decode(request.body.read)
+          if parsed_body[:name]
+            [parsed_body]
+          elsif params[:events]
+            parsed_body
+          else
+            []
+          end
         rescue ActiveSupport::JSON.parse_error
           # do nothing
           []

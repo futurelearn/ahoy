@@ -123,7 +123,7 @@ module Ahoy
     def set_cookie(name, value, duration = nil, use_domain = true)
       cookie = {
         value: value,
-        secure: true
+        secure: Ahoy.secure_cookie
       }
       cookie[:expires] = duration.from_now if duration
       domain = Ahoy.cookie_domain || Ahoy.domain

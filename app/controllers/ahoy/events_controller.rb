@@ -32,7 +32,14 @@ module Ahoy
             request.body.read
           end
         begin
-          ActiveSupport::JSON.decode(data)
+          case (parsed = ActiveSupport::JSON.decode(data))
+          when Array
+            parsed
+          when Hash
+            [parsed]
+          else
+            []
+          end
         rescue ActiveSupport::JSON.parse_error
           # do nothing
           []
